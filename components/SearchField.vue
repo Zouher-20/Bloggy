@@ -13,14 +13,14 @@ watch(
 <template>
   <div class="space-y-2 lg:space-y-0 lg:space-x-4 mt-8">
     <div
-      class="flex lg:inline-flex justify-between items-center bg-gray-100 space-x-2 rounded-lg px-3 py-2"
+      class="flex lg:inline-flex justify-between items-center bg-gray-100 space-x-2 w-full rounded-lg px-3 py-2"
     >
       <input
         v-model="search"
         type="text"
         name="search"
-        placeholder="Find something"
-        class="bg-transparent outline-none placeholder-black font-semibold text-sm"
+        placeholder="Find something ..."
+        class="bg-transparent outline-none placeholder-black w-full font-semibold text-sm"
       />
       <button
         :disabled="!search"

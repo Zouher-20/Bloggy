@@ -1,5 +1,9 @@
 <script setup>
-const { data } = await useFetch("/api/hello");
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} | Bloggy` : "Bloggy";
+  },
+});
 </script>
 
 <template>

@@ -1,4 +1,5 @@
 <script setup>
+const emit = defineEmits(["categorySelected"]);
 const props = defineProps(["post"]);
 const dayjs = useDayjs();
 </script>
@@ -10,12 +11,14 @@ const dayjs = useDayjs();
     <div class="py-6 px-5">
       <div class="flex flex-col justify-between">
         <header>
-          <div class="">
-            <a
-              href="#"
-              class="px-3 py-1 border border-blue-300 rounded-full text-blue-300 text-xs uppercase font-semibold"
+          <div class="gap-2 flex flex-wrap">
+            <span
+              v-for="(cat, i) in post.categories"
+              :key="i"
+              @click="emit('categorySelected', cat)"
+              class="px-3 py-1 border border-blue-400 cursor-pointer rounded-full text-blue-400 text-xs uppercase font-semibold"
               style="font-size: 10px"
-              >social</a
+              >{{ cat }}</span
             >
           </div>
           <div class="mt-4">

@@ -1,22 +1,37 @@
 <script setup>
+import CategoriesSelect from "~/components/CategoriesSelect.vue";
+
 var formObj = reactive({
   title: "",
   body: "",
+  categories: [],
 });
-
+const router = useRouter();
 const onFormSubmitted = async () => {
-  const { data, pending, error } = await useFetch(() => `/api/posts`, {
+  const _ = await useFetch(() => `/api/posts`, {
     body: formObj,
     method: "POST",
   });
-  console.log(data);
+  router.push("/");
 };
+
+useSeoMeta(() => {
+  return {
+    title: "Create New Post",
+    ogTitle: "Bloggy - blog platform",
+    description: "a blog platform made by Zouhair Nasser with Nuxt.js",
+    ogDescription: "a blog platform made by Zouhair Nasser with Nuxt.js",
+  };
+});
 </script>
 
 <template>
-  <form @submit.prevent="onFormSubmitted" class="flex justify-center w-full">
-    <!-- var x = Math.floor((Math.random() * 10000))  -->
-    <div class="border bg-gray-100 my-5 w-1/3 rounded-lg">
+  <form
+    @submit.prevent="onFormSubmitted"
+    class="lg:w-1/3 md:w-1/2 mx-auto w-11/12"
+  >
+    <BackLink class="my-8" />
+    <div class="border bg-gray-100 my-5 rounded-lg">
       <div class="text-xl shadow-lg p-2 text-blue-500">Create New Post</div>
       <hr />
 
@@ -38,8 +53,10 @@ const onFormSubmitted = async () => {
           v-model="formObj.body"
         />
 
+        <CategoriesSelect v-model="formObj.categories" />
+
         <button
-          class="py-3 px-8 ml-auto bg-blue-500 text-white rounded-full"
+          class="py-3 lg:w-fit mt-4 w-full px-8 ml-auto bg-blue-500 text-white rounded-full"
           type="submit"
         >
           Save

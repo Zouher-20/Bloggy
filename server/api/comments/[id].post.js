@@ -2,17 +2,14 @@ import * as fs from "fs";
 export default defineEventHandler(async (event) => {
   var data = JSON.parse(fs.readFileSync("server/db/postsdb.json"));
   const body = await readBody(event);
-  var newPost = {
+  var newComment = {
     ...body,
-    id: Math.floor(Math.random() * 1000000000),
     publishedAt: new Date(),
-    comments: [],
   };
 
-  data.push(newPost);
+  var post = data.find((el) => el.id.toString() === event.context.params.id);
+  post.comments.push(newComment);
   fs.writeFileSync("server/db/postsdb.json", JSON.stringify(data));
+
   return true;
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "application/json");
-  res.end(json);
 });

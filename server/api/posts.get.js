@@ -7,6 +7,11 @@ export default defineEventHandler((event) => {
   const query = getQuery(event);
   const page = query.page || 1;
   const search = query.search;
+  const category = query.category;
+
+  if (category) {
+    data = data.filter((el) => el.categories.includes(category));
+  }
   if (search) {
     data = data.filter((el) => el.title.includes(search));
   }
@@ -18,10 +23,6 @@ export default defineEventHandler((event) => {
       pages: Math.ceil(data.length / 7),
       total: data.length,
     },
-    search,
   };
   return response;
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "application/json");
-  res.end(json);
 });
