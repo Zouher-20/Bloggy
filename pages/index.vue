@@ -2,7 +2,7 @@
 const currentPage = ref(1);
 const search = ref(null);
 const category = ref(null);
-const { data, pending, error } = await useFetch(() => `/api/posts`, {
+const { data, error } = await useFetch(() => `/api/posts`, {
   query: { page: currentPage, search, category },
   watch: [currentPage, search, category],
 });
@@ -19,6 +19,7 @@ const categoriesData = await useFetch(() => `/api/categories`);
 
 <template>
   <section class="px-6 py-8">
+    <!-- 👉 Heading -->
     <header class="max-w-xl mx-auto space-y-5 mt-20 text-center">
       <h1 class="text-4xl text-blue-500">Bloggy</h1>
       <h2 class="inline-flex mt-2">A Blog Platform By Zouhair Nasser</h2>
@@ -30,7 +31,18 @@ const categoriesData = await useFetch(() => `/api/categories`);
       />
     </header>
 
-    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+    <!-- 👉 Error Alert -->
+
+    <section
+      v-if="error"
+      class="text-red-400 text-2xl text-center w-full mt-10"
+    >
+      There was an error fetching data
+    </section>
+
+    <!-- 👉 Posts List -->
+
+    <main v-else class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
       <div class="lg:grid gap-2 lg:grid-cols-3">
         <FeaturedPostCard
           @categorySelected="category = $event"
@@ -45,6 +57,9 @@ const categoriesData = await useFetch(() => `/api/categories`);
           :key="post.id"
         />
       </div>
+
+      <!-- 👉 Pagination -->
+
       <Pagination
         :pagination="data.pagination"
         v-model="currentPage"

@@ -14,4 +14,5 @@ export default defineNuxtConfig({
       title: "Bloggy",
     },
   },
+  transpile: ["vue-toastification"],
 });

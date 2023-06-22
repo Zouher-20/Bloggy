@@ -1,17 +1,20 @@
 <script setup>
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps(["modelValue"]);
-const { data, error, refresh } = await useFetch(() => `/api/categories`);
+const { data, refresh } = await useFetch(() => `/api/categories`);
 var selected = ref([]);
 const newCategory = ref("");
+
 const onCategoryPushed = async () => {
   const categoryCreate = await useFetch(() => `/api/categories`, {
     method: "POST",
     body: {
       category: newCategory.value,
     },
+    onResponse() {
+      refresh();
+    },
   });
-  refresh();
 };
 const toggleCategory = (cat) => {
   if (selected.value.includes(cat))
@@ -23,11 +26,12 @@ const toggleCategory = (cat) => {
 
 <template>
   <div class="flex flex-wrap items-center gap-4">
+    <label class="font-bold text-xs text-gray-700">Categories :</label>
     <TransitionGroup
       v-if="data.length > 0"
       tag="ul"
       name="fade"
-      class="flex flex-wrap items-center gap-4"
+      class="flex flex-wrap items-center gap-2"
     >
       <li
         @click="toggleCategory(category)"
@@ -42,7 +46,7 @@ const toggleCategory = (cat) => {
     </TransitionGroup>
     <form @submit.prevent="onCategoryPushed">
       <input
-        class="border-b-2 rounded-xl w-32 text-sm py-1 px-2"
+        class="border-b-2 rounded-xl w-32 text-sm py-1 px-2 focus:outline focus:outline-1 focus:outline-blue-400"
         required
         type="text"
         v-model="newCategory"

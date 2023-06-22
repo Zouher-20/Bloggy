@@ -1,6 +1,7 @@
 <script setup>
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps(["modelValue", "pagination"]);
+
 const page = computed({
   set(val) {
     emit("update:modelValue", val);

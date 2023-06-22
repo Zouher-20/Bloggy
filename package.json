@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "sass": "^1.63.4"
+    "sass": "^1.63.4",
+    "vue-toastification": "^2.0.0-rc.5"
   }
 }
